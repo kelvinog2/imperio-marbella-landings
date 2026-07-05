@@ -1,0 +1,18 @@
+---
+import { apartment as defaultApartment, type Apartment } from "@/data/landings";
+import MapTransition from "./MapTransition";
+
+interface Props {
+  apartment?: Apartment;
+}
+
+const { apartment = defaultApartment } = Astro.props;
+---
+
+<MapTransition
+  client:visible
+  map={apartment.map}
+  nearby={apartment.nearby}
+  address={apartment.address.full}
+  apartmentName={apartment.shortName}
+/>

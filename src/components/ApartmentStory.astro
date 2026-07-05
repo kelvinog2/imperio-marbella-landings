@@ -1,0 +1,21 @@
+---
+import { apartment } from "@/data/landings";
+---
+
+<section class="parallax-band" aria-labelledby="estancia-title">
+  <img src="/assets/apartamento/imperio-14.webp" alt="" loading="lazy" decoding="async" />
+  <div class="parallax-content">
+    <div>
+      <span class="section-kicker">Terraza cerrada</span>
+      <h2 class="section-title" id="estancia-title">Desayuno tranquilo, playa a pie y centro vivo alrededor.</h2>
+    </div>
+    <div class="fact-grid">
+      {apartment.quickFacts.map((fact) => (
+        <div class="fact-item">
+          <strong>{fact.value}</strong>
+          <span>{fact.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

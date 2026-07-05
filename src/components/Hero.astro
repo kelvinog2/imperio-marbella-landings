@@ -1,0 +1,67 @@
+---
+import { apartment } from "@/data/landings";
+
+interface Props {
+  landing: {
+    heroImage: string;
+    heroImageSmall?: string;
+    eyebrow: string;
+    heroWord: string;
+    headline: string;
+    intro: string;
+    cta: string;
+    primaryHref?: string;
+    secondaryCta?: string;
+    secondaryHref?: string;
+    scrollTarget?: string;
+  };
+}
+
+const { landing } = Astro.props;
+const heroLetters = Array.from(landing.heroWord);
+const primaryHref = landing.primaryHref ?? "#reserva-directa";
+const secondaryCta = landing.secondaryCta ?? "Ver en Booking";
+const secondaryHref = landing.secondaryHref ?? apartment.bookingUrl;
+const scrollTarget = landing.scrollTarget ?? "#valoracion";
+const secondaryIsExternal = secondaryHref.startsWith("http");
+---
+
+<section class="hero" id="inicio">
+  <div class="hero-media" aria-hidden="true">
+    <picture>
+      {landing.heroImageSmall && <source srcset={landing.heroImageSmall} media="(max-width: 640px)" />}
+      <img src={landing.heroImage} alt="" width="1672" height="941" loading="eager" decoding="async" />
+    </picture>
+  </div>
+  <div class="hero-content">
+    <div class="hero-title-stack">
+      <p class="hero-eyebrow">{landing.eyebrow}</p>
+      <p class="hero-word" aria-label={landing.heroWord}>
+        {heroLetters.map((letter, index) => (
+          <span class="hero-letter" aria-hidden="true" style={`--letter-index: ${index};`}>
+            {letter}
+          </span>
+        ))}
+      </p>
+    </div>
+    <div class="hero-panel">
+      <h1>{landing.headline}</h1>
+      <p>{landing.intro}</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href={primaryHref}>{landing.cta}</a>
+        <a
+          class="button button-outline"
+          href={secondaryHref}
+          target={secondaryIsExternal ? "_blank" : undefined}
+          rel={secondaryIsExternal ? "noreferrer" : undefined}
+        >
+          {secondaryCta}
+        </a>
+      </div>
+    </div>
+  </div>
+  <a class="scroll-cue" href={scrollTarget} aria-label="Bajar a la siguiente sección">
+    <span></span>
+    Scroll
+  </a>
+</section>

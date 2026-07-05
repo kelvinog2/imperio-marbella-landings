@@ -1,0 +1,125 @@
+---
+import { apartment, apartmentCards, directBenefits, mainLanding, whatsappHref } from "@/data/landings";
+import DirectBookingSection from "./DirectBookingSection.astro";
+import Footer from "./Footer.astro";
+import Hero from "./Hero.astro";
+import LocationExplorer from "./LocationExplorer";
+import SiteHeader from "./SiteHeader.astro";
+
+const navItems = [
+  { label: "Apartamentos", href: "#apartamentos" },
+  { label: "Ubicación", href: "#ubicacion-general" },
+  { label: "Galería", href: "#galeria" },
+  { label: "Reserva directa", href: "#reserva-directa" },
+  { label: "Contacto", href: "#contacto" }
+];
+
+const galleryImages = [
+  "/assets/main/hero-marbella-sm.webp",
+  "/assets/apartamento/imperio-12.webp",
+  "/assets/imperio-2/imperio-2-07.webp",
+  "/assets/main/ubicaciones-interes-sm.webp",
+  "/assets/apartamento/imperio-08.webp",
+  "/assets/apartamento/imperio-16.webp",
+  "/assets/imperio-2/imperio-2-18.webp",
+  "/assets/apartamento/imperio-14.webp"
+];
+---
+
+<main class="page-shell main-landing-shell">
+  <SiteHeader navItems={navItems} ctaHref="#reserva-directa" ctaLabel="Descuento" />
+  <Hero landing={mainLanding} />
+
+  <section class="main-proof-band" aria-label="Promoción de reserva directa">
+    <div class="main-proof-inner">
+      <div class="booking-style-badge">
+        <span>Booking.com</span>
+        <strong>9,9</strong>
+        <em>Excepcional</em>
+      </div>
+      <p>
+        Apartamentos Imperio reúne estancias con valoración excepcional en Marbella. Si llegaste por una tarjeta especial, puedes generar tu descuento directo al instante.
+      </p>
+      <a class="button button-primary" href="#reserva-directa">Generar descuento</a>
+    </div>
+  </section>
+
+  <section class="main-apartments" id="apartamentos" aria-labelledby="apartments-title">
+    <div class="main-section-heading">
+      <span>Nuestros apartamentos</span>
+      <h2 id="apartments-title">Elige tu Imperio en Marbella</h2>
+      <p>Una entrada rápida para comparar, contactar directamente y reservar con una ventaja que no aparece en los portales.</p>
+    </div>
+
+    <div class="apartment-card-grid">
+      {apartmentCards.map((item) => (
+        <article class="apartment-card">
+          <div class="apartment-card-media">
+            <img src={item.image} alt="" width="640" height="480" loading="lazy" decoding="async" />
+            <div class="booking-rating-card" aria-label={`Puntuación ${item.rating} excepcional`}>
+              <span>Booking.com</span>
+              <strong>{item.rating}</strong>
+              <em>Excepcional</em>
+            </div>
+          </div>
+          <div class="apartment-card-body">
+            <span>{item.subtitle}</span>
+            <h3>{item.name}</h3>
+            <p>{item.description}</p>
+            <ul>
+              {item.facts.map((fact) => <li>{fact}</li>)}
+            </ul>
+            <div class="apartment-card-actions">
+              <a class="button button-primary" href={item.href}>Ver detalles</a>
+              <a class="button button-blue" href={item.bookingHref} target={item.bookingHref.startsWith("http") ? "_blank" : undefined} rel={item.bookingHref.startsWith("http") ? "noreferrer" : undefined}>
+                Ver reseñas
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <LocationExplorer client:load />
+
+  <section class="direct-benefits-mini" aria-labelledby="benefits-title">
+    <div class="main-section-heading">
+      <span>Beneficios de la reserva directa</span>
+      <h2 id="benefits-title">Tu código convierte una consulta en una tarifa especial</h2>
+    </div>
+    <div class="direct-benefit-grid">
+      {directBenefits.map((benefit) => (
+        <article>
+          <span aria-hidden="true"></span>
+          <h3>{benefit.title}</h3>
+          <p>{benefit.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <DirectBookingSection compact />
+
+  <section class="main-gallery" id="galeria" aria-labelledby="main-gallery-title">
+    <div class="main-section-heading">
+      <span>Galería de la experiencia Marbella</span>
+      <h2 id="main-gallery-title">Mar, centro y apartamentos listos para llegar</h2>
+    </div>
+    <div class="main-gallery-grid">
+      {galleryImages.map((image, index) => (
+        <img src={image} alt="" width="640" height="420" loading="lazy" decoding="async" class:list={[index > 3 && "mobile-soft-hide"]} />
+      ))}
+    </div>
+  </section>
+
+  <section class="main-contact-strip" id="contacto">
+    <div>
+      <span>{apartment.brand}</span>
+      <strong>Reserva directa para Marbella</strong>
+    </div>
+    <a class="button button-light" href={whatsappHref}>Contactar por WhatsApp</a>
+  </section>
+
+  <Footer />
+</main>

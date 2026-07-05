@@ -1,0 +1,25 @@
+---
+import { apartment as defaultApartment, type Apartment } from "@/data/landings";
+import GalleryExplorer from "./GalleryExplorer";
+
+interface Props {
+  apartment?: Apartment;
+}
+
+const { apartment = defaultApartment } = Astro.props;
+---
+
+<section class="section" id="galeria">
+  <div class="section-narrow">
+    <div class="section-header">
+      <div>
+        <span class="section-kicker">Galería</span>
+        <h2 class="section-title">Encuentra tu base en Marbella.</h2>
+      </div>
+      <p class="section-copy">
+        Fotos organizadas por zonas para decidir rapido: descanso, ubicacion, servicios y detalles de llegada.
+      </p>
+    </div>
+    <GalleryExplorer client:visible gallery={apartment.gallery} services={apartment.services} />
+  </div>
+</section>

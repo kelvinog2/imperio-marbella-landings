@@ -1,0 +1,71 @@
+---
+import MainLandingPage from "@/components/MainLandingPage.astro";
+import { apartment, apartmentCards, baseUrl, mainLanding, promo } from "@/data/landings";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const canonical = `${baseUrl}/`;
+const image = new URL(mainLanding.heroImage, baseUrl).toString();
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "LodgingBusiness",
+    "@id": `${canonical}#business`,
+    name: apartment.brand,
+    url: canonical,
+    telephone: apartment.phone,
+    email: apartment.email,
+    priceRange: "$$",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: apartment.address.street,
+      addressLocality: apartment.address.city,
+      addressRegion: apartment.address.region,
+      postalCode: apartment.address.postalCode,
+      addressCountry: "ES"
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "9.9",
+      bestRating: "10",
+      reviewCount: apartment.rating.comments
+    },
+    makesOffer: {
+      "@type": "Offer",
+      name: promo.label,
+      description: promo.text,
+      availability: "https://schema.org/InStock"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": `${canonical}#apartments`,
+    name: "Apartamentos Imperio Marbella",
+    itemListElement: apartmentCards.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: new URL(item.href, baseUrl).toString(),
+      name: `${item.name} ${item.subtitle}`
+    }))
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${canonical}#webpage`,
+    name: mainLanding.title,
+    description: mainLanding.metaDescription,
+    url: canonical,
+    primaryImageOfPage: image
+  }
+];
+---
+
+<BaseLayout
+  title={mainLanding.title}
+  description={mainLanding.metaDescription}
+  canonical={canonical}
+  image={image}
+  jsonLd={jsonLd}
+>
+  <MainLandingPage />
+</BaseLayout>

@@ -1,0 +1,17 @@
+---
+import { apartment as defaultApartment, type Apartment } from "@/data/landings";
+import TrustScoreShowcase from "./TrustScoreShowcase";
+
+interface Props {
+  apartment?: Apartment;
+}
+
+const { apartment = defaultApartment } = Astro.props;
+const photos = apartment.gallery.slice(0, 3).map((item) => ({
+  src: item.images[0],
+  label: item.title,
+  offset: item.group === "Descanso" ? -10 : item.group === "Salon" || item.group === "Salón" ? 18 : -24
+}));
+---
+
+<TrustScoreShowcase client:visible rating={apartment.rating} scores={apartment.scores} photos={photos} apartmentName={apartment.shortName} />

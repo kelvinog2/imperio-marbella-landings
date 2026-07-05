@@ -1,0 +1,11 @@
+---
+import { apartment, landing } from "@/data/landings";
+import AvailabilityCalendar from "./AvailabilityCalendar";
+---
+
+<AvailabilityCalendar
+  client:visible
+  fallback={apartment.availability}
+  bookingUrl={apartment.bookingUrl}
+  apartmentSlug={landing.slug}
+/>

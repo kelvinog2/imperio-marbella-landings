@@ -1,0 +1,39 @@
+---
+import JsonLd from "@/components/JsonLd.astro";
+import "@/styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  image: string;
+  jsonLd: unknown;
+}
+
+const { title, description, canonical, image, jsonLd } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" sizes="any" href="/favicon.ico" />
+    <link rel="preload" as="image" href="/assets/map/mapa.webp" />
+    <meta name="theme-color" content="#10272d" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <JsonLd data={jsonLd} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

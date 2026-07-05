@@ -1,0 +1,60 @@
+---
+import { apartment as defaultApartment, landing as defaultLanding, type Apartment } from "@/data/landings";
+import DirectBookingSection from "./DirectBookingSection.astro";
+import FaqSection from "./FaqSection.astro";
+import Footer from "./Footer.astro";
+import GallerySection from "./GallerySection.astro";
+import Hero from "./Hero.astro";
+import MapSection from "./MapSection.astro";
+import ReviewsSection from "./ReviewsSection.astro";
+import ServicesSection from "./ServicesSection.astro";
+import SiteHeader from "./SiteHeader.astro";
+import TrustStats from "./TrustStats.astro";
+
+type LandingView = {
+  heroImage: string;
+  heroImageSmall?: string;
+  eyebrow: string;
+  heroWord: string;
+  headline: string;
+  intro: string;
+  cta: string;
+  primaryHref?: string;
+  secondaryCta?: string;
+  secondaryHref?: string;
+  scrollTarget?: string;
+};
+
+interface Props {
+  apartment?: Apartment;
+  landing?: LandingView;
+}
+
+const { apartment = defaultApartment, landing = defaultLanding } = Astro.props;
+---
+
+<main class="page-shell">
+  <SiteHeader />
+  <Hero landing={landing} />
+  <TrustStats apartment={apartment} />
+  <DirectBookingSection compact apartment={apartment} />
+
+  <section class="section" aria-labelledby="intro-title">
+    <div class="section-narrow">
+      <div class="section-header">
+        <div>
+          <span class="section-kicker">{apartment.shortName}</span>
+          <h2 class="section-title" id="intro-title">{apartment.quickFacts[1]?.value ?? "Marbella"} pensados para llegar y estar bien.</h2>
+        </div>
+        <p class="section-copy">{apartment.description}</p>
+      </div>
+    </div>
+  </section>
+
+  <GallerySection apartment={apartment} />
+  <ServicesSection apartment={apartment} />
+  <MapSection apartment={apartment} />
+  <ReviewsSection apartment={apartment} />
+  <FaqSection apartment={apartment} />
+  <Footer apartment={apartment} />
+</main>

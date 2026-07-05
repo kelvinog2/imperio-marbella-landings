@@ -1,0 +1,19 @@
+---
+import LandingPage from "@/components/LandingPage.astro";
+import { baseUrl, landing } from "@/data/landings";
+import { buildJsonLd } from "@/lib/jsonld";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const canonical = `${baseUrl}/${landing.slug}/`;
+const image = new URL(landing.heroImage, baseUrl).toString();
+---
+
+<BaseLayout
+  title={landing.title}
+  description={landing.metaDescription}
+  canonical={canonical}
+  image={image}
+  jsonLd={buildJsonLd(landing)}
+>
+  <LandingPage />
+</BaseLayout>

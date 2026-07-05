@@ -1,0 +1,52 @@
+---
+import { apartment, whatsappHref } from "@/data/landings";
+
+interface NavItem {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  navItems?: NavItem[];
+  ctaHref?: string;
+  ctaLabel?: string;
+}
+
+const {
+  navItems = [
+    { label: "Galería", href: "#galeria" },
+    { label: "Servicios", href: "#servicios" },
+    { label: "Ubicación", href: "#ubicacion" },
+    { label: "Reserva directa", href: "#reserva-directa" }
+  ],
+  ctaHref = whatsappHref,
+  ctaLabel = "Reservar"
+} = Astro.props;
+---
+
+<header class="site-header" data-site-header>
+  <div class="header-inner">
+    <a class="brand-mark" href="#inicio" aria-label="Apartamentos Imperio">
+      <img src="/assets/apartamento/imperio-logo.png" alt="" width="84" height="45" loading="eager" />
+      <span>{apartment.brand}</span>
+    </a>
+    <nav class="primary-nav" aria-label="Secciones">
+      {navItems.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+    <div class="header-actions">
+      <span class="language-chip">ES</span>
+      <a class="button button-light" href={ctaHref}>{ctaLabel}</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector("[data-site-header]");
+
+  const syncHeader = () => {
+    header?.classList.toggle("is-scrolled", window.scrollY > 24);
+  };
+
+  syncHeader();
+  window.addEventListener("scroll", syncHeader, { passive: true });
+</script>

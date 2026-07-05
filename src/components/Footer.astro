@@ -1,0 +1,23 @@
+---
+import { apartment as defaultApartment, whatsappHref, type Apartment } from "@/data/landings";
+
+interface Props {
+  apartment?: Apartment;
+}
+
+const { apartment = defaultApartment } = Astro.props;
+---
+
+<footer class="footer">
+  <div>
+    <strong>{apartment.brand}</strong>
+    <p>{apartment.address.full}</p>
+  </div>
+  <nav class="footer-links" aria-label="Contacto">
+    <a href="/">Inicio</a>
+    <a href="/#apartamentos">Apartamentos</a>
+    <a href="#reserva-directa">Reserva directa</a>
+    <a href={whatsappHref}>WhatsApp</a>
+    <a href={apartment.bookingUrl} target="_blank" rel="noreferrer">Booking</a>
+  </nav>
+</footer>

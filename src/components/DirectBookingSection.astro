@@ -1,0 +1,21 @@
+---
+import { apartment as defaultApartment, directBenefits, promo, type Apartment } from "@/data/landings";
+import DirectBookingInteractive from "./DirectBookingInteractive";
+
+interface Props {
+  compact?: boolean;
+  apartment?: Apartment;
+}
+
+const { compact = false, apartment = defaultApartment } = Astro.props;
+---
+
+<section class:list={["direct-booking", compact && "direct-booking-compact"]} id="reserva-directa" aria-labelledby="direct-booking-title">
+  <DirectBookingInteractive
+    client:load
+    apartmentName={apartment.shortName}
+    bookingUrl={apartment.bookingUrl}
+    benefits={directBenefits}
+    promo={promo}
+  />
+</section>

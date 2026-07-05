@@ -1,0 +1,31 @@
+---
+import { apartment as defaultApartment, type Apartment } from "@/data/landings";
+
+interface Props {
+  apartment?: Apartment;
+}
+
+const { apartment = defaultApartment } = Astro.props;
+---
+
+<section class="section" aria-labelledby="faq-title">
+  <div class="section-narrow">
+    <div class="section-header">
+      <div>
+        <span class="section-kicker">Antes de reservar</span>
+        <h2 class="section-title" id="faq-title">Preguntas rápidas.</h2>
+      </div>
+      <p class="section-copy">
+        Lo básico para decidir desde el móvil, sin abrir diez pestañas ni escribir un mensaje previo.
+      </p>
+    </div>
+    <div class="faq-grid">
+      {apartment.faqs.map((faq) => (
+        <article class="faq-item">
+          <h3>{faq.question}</h3>
+          <p>{faq.answer}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

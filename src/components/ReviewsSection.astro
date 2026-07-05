@@ -1,0 +1,25 @@
+---
+import { apartment as defaultApartment, type Apartment } from "@/data/landings";
+import ReviewProofCards from "./ReviewProofCards";
+
+interface Props {
+  apartment?: Apartment;
+}
+
+const { apartment = defaultApartment } = Astro.props;
+---
+
+<section class="section reviews-section" aria-labelledby="reviews-title">
+  <div class="section-narrow">
+    <div class="section-header reviews-header">
+      <div>
+        <span class="section-kicker">Comentarios</span>
+        <h2 class="section-title" id="reviews-title">Comentarios que ayudan a decidir.</h2>
+      </div>
+      <p class="section-copy">
+        Cada comentario apunta a una razon de reserva: ubicacion, equipamiento, limpieza y trato.
+      </p>
+    </div>
+    <ReviewProofCards client:visible reviews={apartment.reviews} />
+  </div>
+</section>
