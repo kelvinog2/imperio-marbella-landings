@@ -103,8 +103,8 @@ const galleryItems = [
       {apartmentCards.map((item) => (
         <article class="apartment-card">
           <div class="apartment-card-media">
-            <img src={item.image} alt="" width="640" height="480" loading="lazy" decoding="async" />
-            <div class="booking-rating-card" aria-label={`Puntuación ${item.rating} excepcional`}>
+            <img src={item.image} alt={`${item.name}, ${item.subtitle}`} width="640" height="480" loading="lazy" decoding="async" />
+            <div class="booking-rating-card" role="img" aria-label={`Booking.com: ${item.rating} excepcional para ${item.name}`}>
               <span>Booking.com</span>
               <strong>{item.rating}</strong>
               <em>Excepcional</em>
@@ -118,10 +118,11 @@ const galleryItems = [
               {item.facts.map((fact) => <li>{fact}</li>)}
             </ul>
             <div class="apartment-card-actions">
-              <a class="button button-primary" href={item.href}>Ver detalles</a>
+              <a class="button button-primary" href={item.href} aria-label={`Ver detalles de ${item.name}`}>Ver detalles</a>
               <a
                 class="button button-blue"
                 href={item.bookingHref}
+                aria-label={`Ver reseñas de ${item.name} en Booking.com`}
                 target={item.bookingHref.startsWith("http") ? "_blank" : undefined}
                 rel={item.bookingHref.startsWith("http") ? "noreferrer" : undefined}
               >
@@ -134,7 +135,7 @@ const galleryItems = [
     </div>
   </section>
 
-  <LocationExplorer client:load />
+  <LocationExplorer client:visible />
 
   <section class="direct-benefits-mini" aria-labelledby="benefits-title">
     <div class="main-section-heading">
@@ -162,7 +163,7 @@ const galleryItems = [
     <div class="main-gallery-mosaic">
       {galleryItems.map((item) => (
         <figure class:list={["main-gallery-tile", item.variant]}>
-          <img src={item.image} alt="" width="720" height="520" loading="lazy" decoding="async" />
+          <img src={item.image} alt={`${item.apartment}: ${item.label}`} width="720" height="520" loading="lazy" decoding="async" />
           <figcaption>
             <span>{item.apartment}</span>
             <strong>{item.label}</strong>

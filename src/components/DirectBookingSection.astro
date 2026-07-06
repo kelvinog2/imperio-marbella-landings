@@ -12,7 +12,7 @@ const { compact = false, apartment = defaultApartment } = Astro.props;
 
 <section class:list={["direct-booking", compact && "direct-booking-compact"]} id="reserva-directa" aria-labelledby="direct-booking-title">
   <DirectBookingInteractive
-    client:load
+    client:visible
     apartmentName={apartment.shortName}
     bookingUrl={apartment.bookingUrl}
     benefits={directBenefits}

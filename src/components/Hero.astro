@@ -30,13 +30,13 @@ const secondaryIsExternal = secondaryHref.startsWith("http");
   <div class="hero-media" aria-hidden="true">
     <picture>
       {landing.heroImageSmall && <source srcset={landing.heroImageSmall} media="(max-width: 640px)" />}
-      <img src={landing.heroImage} alt="" width="1672" height="941" loading="eager" decoding="async" />
+      <img src={landing.heroImage} alt="" width="1672" height="941" loading="eager" decoding="sync" fetchpriority="high" />
     </picture>
   </div>
   <div class="hero-content">
     <div class="hero-title-stack">
       <p class="hero-eyebrow">{landing.eyebrow}</p>
-      <p class="hero-word" aria-label={landing.heroWord}>
+      <p class="hero-word" aria-hidden="true">
         {heroLetters.map((letter, index) => (
           <span class="hero-letter" aria-hidden="true" style={`--letter-index: ${index};`}>
             {letter}

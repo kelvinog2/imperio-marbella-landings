@@ -64,7 +64,7 @@ export default function LocationExplorer() {
               />
             </picture>
 
-            <div className="location-hotspots" aria-label="Puntos de interés en el mapa">
+            <div className="location-hotspots" role="group" aria-label="Puntos de interés en el mapa">
               {allPoints.map((point) => (
                 <button
                   key={point.id}
@@ -72,7 +72,6 @@ export default function LocationExplorer() {
                   type="button"
                   style={{ left: `${point.x}%`, top: `${point.y}%` }}
                   aria-label={`Ver ${point.name}`}
-                  aria-pressed={activeId === point.id}
                   onClick={() => activatePoint(point.id, true)}
                   onFocus={() => activatePoint(point.id)}
                   onMouseEnter={() => activatePoint(point.id)}
@@ -110,7 +109,7 @@ export default function LocationExplorer() {
             <strong>{activePoint.kind === "interest" ? activePoint.time : activePoint.detail}</strong>
           </div>
 
-          <div className="location-chip-strip" aria-label="Elegir punto de interés">
+          <div className="location-chip-strip" role="group" aria-label="Elegir punto de interés">
             {allPoints.map((point) => (
               <button
                 key={point.id}
