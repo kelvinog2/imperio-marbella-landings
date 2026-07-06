@@ -33,7 +33,7 @@ export default function LocationExplorer() {
     setActiveId(id);
     if (revealDetail && window.matchMedia("(max-width: 720px)").matches) {
       window.setTimeout(() => {
-        detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        detailRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
       }, 40);
     }
   };
@@ -51,52 +51,54 @@ export default function LocationExplorer() {
 
       <div className="location-explorer-grid">
         <div className="location-frame" onPointerMove={onPointerMove} onPointerLeave={() => setPointer({ x: 0, y: 0 })}>
-          <picture>
-            <source srcSet="/assets/main/ubicaciones-interes-sm.webp" media="(max-width: 640px)" />
-            <img
-              src="/assets/main/ubicaciones-interes.webp"
-              alt="Mapa aéreo de Marbella con Apartamentos Imperio y puntos de interés turístico cercanos"
-              width="1800"
-              height="1013"
-              loading="lazy"
-              decoding="async"
-            />
-          </picture>
+          <div className="location-map-surface">
+            <picture>
+              <source srcSet="/assets/main/ubicaciones-interes-sm.webp" media="(max-width: 640px)" />
+              <img
+                src="/assets/main/ubicaciones-interes.webp"
+                alt="Mapa aéreo de Marbella con Apartamentos Imperio y puntos de interés turístico cercanos"
+                width="1800"
+                height="1013"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
 
-          <div className="location-hotspots" aria-label="Puntos de interés en el mapa">
-            {allPoints.map((point) => (
-              <button
-                key={point.id}
-                className={`location-pin location-pin-${point.kind} ${activeId === point.id ? "is-active" : ""}`}
-                type="button"
-                style={{ left: `${point.x}%`, top: `${point.y}%` }}
-                aria-label={`Ver ${point.name}`}
-                aria-pressed={activeId === point.id}
-                onClick={() => activatePoint(point.id, true)}
-                onFocus={() => activatePoint(point.id)}
-                onMouseEnter={() => activatePoint(point.id)}
+            <div className="location-hotspots" aria-label="Puntos de interés en el mapa">
+              {allPoints.map((point) => (
+                <button
+                  key={point.id}
+                  className={`location-pin location-pin-${point.kind} ${activeId === point.id ? "is-active" : ""}`}
+                  type="button"
+                  style={{ left: `${point.x}%`, top: `${point.y}%` }}
+                  aria-label={`Ver ${point.name}`}
+                  aria-pressed={activeId === point.id}
+                  onClick={() => activatePoint(point.id, true)}
+                  onFocus={() => activatePoint(point.id)}
+                  onMouseEnter={() => activatePoint(point.id)}
+                >
+                  <span>{point.kind === "interest" ? point.number : "I"}</span>
+                </button>
+              ))}
+
+              <article
+                className={`location-bubble location-bubble-${activePoint.kind} ${bubblePlacement}`}
+                style={
+                  {
+                    left: bubbleLeft,
+                    top: `${activePoint.y}%`,
+                    "--float-x": `${pointer.x}px`,
+                    "--float-y": `${pointer.y}px`
+                  } as React.CSSProperties
+                }
+                aria-live="polite"
               >
-                <span>{point.kind === "interest" ? point.number : "I"}</span>
-              </button>
-            ))}
-
-            <article
-              className={`location-bubble location-bubble-${activePoint.kind} ${bubblePlacement}`}
-              style={
-                {
-                  left: bubbleLeft,
-                  top: `${activePoint.y}%`,
-                  "--float-x": `${pointer.x}px`,
-                  "--float-y": `${pointer.y}px`
-                } as React.CSSProperties
-              }
-              aria-live="polite"
-            >
-              <span>{activePoint.kind === "interest" ? `Punto ${activePoint.number}` : activePoint.type}</span>
-              <h3>{activePoint.name}</h3>
-              <p>{activePoint.description}</p>
-              <em>{activePoint.kind === "interest" ? activePoint.time : activePoint.detail}</em>
-            </article>
+                <span>{activePoint.kind === "interest" ? `Punto ${activePoint.number}` : activePoint.type}</span>
+                <h3>{activePoint.name}</h3>
+                <p>{activePoint.description}</p>
+                <em>{activePoint.kind === "interest" ? activePoint.time : activePoint.detail}</em>
+              </article>
+            </div>
           </div>
         </div>
 

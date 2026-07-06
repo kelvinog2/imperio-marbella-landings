@@ -430,7 +430,7 @@ export type Apartment = (typeof apartments)[number];
 
 export const promo = {
   label: "Ruleta promocional exclusiva",
-  title: "¿Has recibido una tarjeta con QR?",
+  title: "Ya estás en Imperio: participa por un descuento especial.",
   text:
     "Genera una sola vez tu código promocional único y envíanoslo por WhatsApp con tus fechas, número de huéspedes y apartamento favorito.",
   whatsappMessage:

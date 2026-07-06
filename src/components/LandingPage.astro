@@ -31,10 +31,18 @@ interface Props {
 }
 
 const { apartment = defaultApartment, landing = defaultLanding } = Astro.props;
+
+const navItems = [
+  { label: "Inicio", href: "/" },
+  { label: "Imperio 1", href: "/imperio-1/" },
+  { label: "Imperio 2", href: "/imperio-2/" },
+  { label: "Imperio 3", href: "/imperio-3/" },
+  { label: "Reserva directa", href: "#reserva-directa" }
+];
 ---
 
 <main class="page-shell">
-  <SiteHeader />
+  <SiteHeader navItems={navItems} ctaHref="#reserva-directa" ctaLabel="Descuento" />
   <Hero landing={landing} />
   <TrustStats apartment={apartment} />
   <DirectBookingSection compact apartment={apartment} />
@@ -56,5 +64,5 @@ const { apartment = defaultApartment, landing = defaultLanding } = Astro.props;
   <MapSection apartment={apartment} />
   <ReviewsSection apartment={apartment} />
   <FaqSection apartment={apartment} />
-  <Footer apartment={apartment} />
+  <Footer />
 </main>

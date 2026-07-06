@@ -23,6 +23,7 @@ type Props = {
 };
 
 const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+const storageKey = "imperio-promo-global";
 
 function randomToken(length = 7) {
   const values = new Uint32Array(length);
@@ -35,26 +36,25 @@ function randomToken(length = 7) {
 
 function drawDiscount(): 0 | 5 | 10 | 15 {
   const roll = Math.random() * 100;
-  if (roll < 40) return 10;
-  if (roll < 65) return 15;
-  if (roll < 80) return 5;
+  if (roll < 50) return 10;
+  if (roll < 80) return 15;
+  if (roll < 95) return 5;
   return 0;
 }
 
-function createResult(apartmentName: string): LotteryResult {
+function createResult(): LotteryResult {
   const discount = drawDiscount();
-  const normalizedName = apartmentName.replace(/\D/g, "") || "VIP";
   return {
     discount,
-    code: `IMP${normalizedName}-${discount || "ND"}-${randomToken()}`
+    code: `IMP-${discount || "DIR"}-${randomToken()}`
   };
 }
 
 export default function DirectBookingInteractive({ apartmentName, bookingUrl, benefits, promo }: Props) {
-  const storageKey = `imperio-promo-${apartmentName.toLowerCase().replace(/\s+/g, "-")}`;
   const [result, setResult] = useState<LotteryResult | null>(null);
   const hasResult = !!result;
   const hasWon = !!result && result.discount > 0;
+  const resultModifier = result ? `has-discount-${result.discount}` : "";
 
   useEffect(() => {
     try {
@@ -74,7 +74,7 @@ export default function DirectBookingInteractive({ apartmentName, bookingUrl, be
 
   const generate = () => {
     if (result) return;
-    const next = createResult(apartmentName);
+    const next = createResult();
     setResult(next);
     try {
       window.localStorage.setItem(storageKey, JSON.stringify(next));
@@ -85,24 +85,28 @@ export default function DirectBookingInteractive({ apartmentName, bookingUrl, be
 
   return (
     <div className="direct-booking-inner">
-      <div className={`promo-lottery ${hasResult ? "has-result" : ""} ${hasWon ? "has-win" : "has-retry"}`}>
+      <div className={`promo-lottery ${hasResult ? "has-result" : ""} ${hasWon ? "has-win" : "has-retry"} ${resultModifier}`}>
         <span className="promo-label">Ruleta promocional directa</span>
-        <div className={`lottery-wheel ${hasResult ? "is-stopped" : ""}`} aria-hidden="true">
-          <span>5%</span>
-          <span>10%</span>
-          <span>15%</span>
+        <div className="lottery-wheel-shell" aria-hidden="true">
+          <span className="lottery-pointer"></span>
+          <div className={`lottery-wheel ${hasResult ? "is-stopped" : ""}`}>
+            <span className={result?.discount === 5 ? "is-active" : ""}>5%</span>
+            <span className={result?.discount === 10 ? "is-active" : ""}>10%</span>
+            <span className={result?.discount === 15 ? "is-active" : ""}>15%</span>
+            <span className={result?.discount === 0 ? "is-active" : ""}>Tarifa</span>
+          </div>
         </div>
         <div className="lottery-display" aria-live="polite">
           {!result && (
             <>
-              <strong>Un giro, un codigo</strong>
-              <p>Genera un codigo unico para solicitar una tarifa directa por WhatsApp.</p>
+              <strong>Un giro, un código</strong>
+              <p>El código queda guardado para todas las páginas de Imperio.</p>
             </>
           )}
 
           {result && hasWon && (
             <>
-              <small>Codigo desbloqueado</small>
+              <small>Código desbloqueado</small>
               <strong>{result.discount}% dto.</strong>
               <code>{result.code}</code>
             </>
@@ -110,10 +114,10 @@ export default function DirectBookingInteractive({ apartmentName, bookingUrl, be
 
           {result && !hasWon && (
             <>
-              <small>Codigo generado</small>
+              <small>Código generado</small>
               <strong>Tarifa directa</strong>
               <code>{result.code}</code>
-              <p>No se asigno descuento automatico, pero puedes pedir tarifa directa con este codigo.</p>
+              <p>No se asignó descuento automático, pero puedes pedir tarifa directa con este código.</p>
             </>
           )}
         </div>
@@ -125,11 +129,11 @@ export default function DirectBookingInteractive({ apartmentName, bookingUrl, be
         <p>{promo.text}</p>
         <div className="direct-actions">
           <button className="button button-primary" type="button" onClick={generate} disabled={hasResult}>
-            {hasResult ? "Codigo generado" : "Generar codigo promocional"}
+            {hasResult ? "Código generado" : "Generar código promocional"}
           </button>
           {hasResult ? (
             <a className="button button-outline" href={whatsappHref}>
-              Enviar codigo por WhatsApp
+              Enviar código por WhatsApp
             </a>
           ) : (
             <a className="button button-outline" href={bookingUrl} target="_blank" rel="noreferrer">

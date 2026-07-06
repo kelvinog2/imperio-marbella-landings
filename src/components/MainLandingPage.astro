@@ -7,22 +7,68 @@ import LocationExplorer from "./LocationExplorer";
 import SiteHeader from "./SiteHeader.astro";
 
 const navItems = [
-  { label: "Apartamentos", href: "#apartamentos" },
-  { label: "Ubicación", href: "#ubicacion-general" },
-  { label: "Galería", href: "#galeria" },
-  { label: "Reserva directa", href: "#reserva-directa" },
-  { label: "Contacto", href: "#contacto" }
+  { label: "Inicio", href: "/" },
+  { label: "Imperio 1", href: "/imperio-1/" },
+  { label: "Imperio 2", href: "/imperio-2/" },
+  { label: "Imperio 3", href: "/imperio-3/" },
+  { label: "Reserva directa", href: "#reserva-directa" }
 ];
 
-const galleryImages = [
-  "/assets/main/hero-marbella-sm.webp",
-  "/assets/apartamento/imperio-12.webp",
-  "/assets/imperio-2/imperio-2-07.webp",
-  "/assets/main/ubicaciones-interes-sm.webp",
-  "/assets/apartamento/imperio-08.webp",
-  "/assets/apartamento/imperio-16.webp",
-  "/assets/imperio-2/imperio-2-18.webp",
-  "/assets/apartamento/imperio-14.webp"
+const galleryItems = [
+  {
+    image: "/assets/apartamento/imperio-12.webp",
+    apartment: "Imperio 1",
+    label: "Salón con terraza",
+    variant: "tile-large"
+  },
+  {
+    image: "/assets/imperio-2/imperio-2-01.webp",
+    apartment: "Imperio 2",
+    label: "125 m2 en Marbella centro",
+    variant: "tile-wide"
+  },
+  {
+    image: "/assets/imperio-3/imperio-3-01.webp",
+    apartment: "Imperio 3",
+    label: "Puerto deportivo y playa",
+    variant: "tile-tall"
+  },
+  {
+    image: "/assets/apartamento/imperio-08.webp",
+    apartment: "Imperio 1",
+    label: "Dormitorio preparado",
+    variant: "tile-small"
+  },
+  {
+    image: "/assets/imperio-2/imperio-2-12.webp",
+    apartment: "Imperio 2",
+    label: "Jacuzzi y descanso",
+    variant: "tile-small"
+  },
+  {
+    image: "/assets/imperio-3/imperio-3-03.webp",
+    apartment: "Imperio 3",
+    label: "Interior práctico",
+    variant: "tile-small"
+  },
+  {
+    image: "/assets/apartamento/imperio-03.webp",
+    apartment: "Imperio 1",
+    label: "Cocina equipada",
+    variant: "tile-wide"
+  },
+  {
+    image: "/assets/imperio-2/imperio-2-18.webp",
+    apartment: "Imperio 2",
+    label: "Terraza y luz",
+    variant: "tile-small mobile-soft-hide"
+  },
+  {
+    image: "/assets/imperio-3/imperio-3-05.webp",
+    apartment: "Imperio 3",
+    label: "Balcón junto al mar",
+    variant: "tile-small mobile-soft-hide"
+  }
 ];
 ---
 
@@ -38,7 +84,9 @@ const galleryImages = [
         <em>Excepcional</em>
       </div>
       <p>
-        Apartamentos Imperio reúne estancias con valoración excepcional en Marbella. Si llegaste por una tarjeta especial, puedes generar tu descuento directo al instante.
+        Apartamentos Imperio reúne estancias con valoración excepcional en Marbella. Si llegaste por
+        una tarjeta especial, puedes generar tu descuento directo una sola vez y usarlo en cualquiera
+        de las páginas.
       </p>
       <a class="button button-primary" href="#reserva-directa">Generar descuento</a>
     </div>
@@ -48,7 +96,7 @@ const galleryImages = [
     <div class="main-section-heading">
       <span>Nuestros apartamentos</span>
       <h2 id="apartments-title">Elige tu Imperio en Marbella</h2>
-      <p>Una entrada rápida para comparar, contactar directamente y reservar con una ventaja que no aparece en los portales.</p>
+      <p>Compara rápido, contacta directamente y reserva con una ventaja que no aparece en los portales.</p>
     </div>
 
     <div class="apartment-card-grid">
@@ -71,7 +119,12 @@ const galleryImages = [
             </ul>
             <div class="apartment-card-actions">
               <a class="button button-primary" href={item.href}>Ver detalles</a>
-              <a class="button button-blue" href={item.bookingHref} target={item.bookingHref.startsWith("http") ? "_blank" : undefined} rel={item.bookingHref.startsWith("http") ? "noreferrer" : undefined}>
+              <a
+                class="button button-blue"
+                href={item.bookingHref}
+                target={item.bookingHref.startsWith("http") ? "_blank" : undefined}
+                rel={item.bookingHref.startsWith("http") ? "noreferrer" : undefined}
+              >
                 Ver reseñas
               </a>
             </div>
@@ -85,7 +138,7 @@ const galleryImages = [
 
   <section class="direct-benefits-mini" aria-labelledby="benefits-title">
     <div class="main-section-heading">
-      <span>Beneficios de la reserva directa</span>
+      <span>Beneficios de reservar directo</span>
       <h2 id="benefits-title">Tu código convierte una consulta en una tarifa especial</h2>
     </div>
     <div class="direct-benefit-grid">
@@ -106,14 +159,20 @@ const galleryImages = [
       <span>Galería de la experiencia Marbella</span>
       <h2 id="main-gallery-title">Mar, centro y apartamentos listos para llegar</h2>
     </div>
-    <div class="main-gallery-grid">
-      {galleryImages.map((image, index) => (
-        <img src={image} alt="" width="640" height="420" loading="lazy" decoding="async" class:list={[index > 3 && "mobile-soft-hide"]} />
+    <div class="main-gallery-mosaic">
+      {galleryItems.map((item) => (
+        <figure class:list={["main-gallery-tile", item.variant]}>
+          <img src={item.image} alt="" width="720" height="520" loading="lazy" decoding="async" />
+          <figcaption>
+            <span>{item.apartment}</span>
+            <strong>{item.label}</strong>
+          </figcaption>
+        </figure>
       ))}
     </div>
   </section>
 
-  <section class="main-contact-strip" id="contacto">
+  <section class="main-contact-strip">
     <div>
       <span>{apartment.brand}</span>
       <strong>Reserva directa para Marbella</strong>

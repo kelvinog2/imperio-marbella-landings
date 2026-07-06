@@ -14,23 +14,24 @@ interface Props {
 
 const {
   navItems = [
-    { label: "Galería", href: "#galeria" },
-    { label: "Servicios", href: "#servicios" },
-    { label: "Ubicación", href: "#ubicacion" },
+    { label: "Inicio", href: "/" },
+    { label: "Imperio 1", href: "/imperio-1/" },
+    { label: "Imperio 2", href: "/imperio-2/" },
+    { label: "Imperio 3", href: "/imperio-3/" },
     { label: "Reserva directa", href: "#reserva-directa" }
   ],
   ctaHref = whatsappHref,
-  ctaLabel = "Reservar"
+  ctaLabel = "WhatsApp"
 } = Astro.props;
 ---
 
 <header class="site-header" data-site-header>
   <div class="header-inner">
-    <a class="brand-mark" href="#inicio" aria-label="Apartamentos Imperio">
+    <a class="brand-mark" href="/" aria-label="Volver a Apartamentos Imperio">
       <img src="/assets/apartamento/imperio-logo.png" alt="" width="84" height="45" loading="eager" />
       <span>{apartment.brand}</span>
     </a>
-    <nav class="primary-nav" aria-label="Secciones">
+    <nav class="primary-nav" aria-label="Páginas">
       {navItems.map((item) => <a href={item.href}>{item.label}</a>)}
     </nav>
     <div class="header-actions">
