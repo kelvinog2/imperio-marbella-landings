@@ -153,6 +153,7 @@ export default function AvailabilityCalendar({ fallback, bookingUrl, apartmentSl
 
       <div
         className={`calendar-shell ${showTouchControls ? "is-touching" : ""}`}
+        role="group"
         aria-label="Calendario de disponibilidad"
         onTouchStart={(event) => {
           touchStart.current = event.touches[0].clientX;

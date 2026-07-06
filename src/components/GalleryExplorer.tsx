@@ -60,7 +60,10 @@ export default function GalleryExplorer({ gallery, services }: Props) {
             className={`gallery-tab ${index === activeGroup ? "is-active" : ""}`}
             type="button"
             role="tab"
+            id={`gallery-tab-${index}`}
+            aria-controls="gallery-panel"
             aria-selected={index === activeGroup}
+            tabIndex={index === activeGroup ? 0 : -1}
             key={item.group}
             onClick={() => selectGroup(index)}
           >
@@ -69,7 +72,12 @@ export default function GalleryExplorer({ gallery, services }: Props) {
         ))}
       </div>
 
-      <div className="gallery-stage">
+      <div
+        className="gallery-stage"
+        id="gallery-panel"
+        role="tabpanel"
+        aria-labelledby={`gallery-tab-${activeGroup}`}
+      >
         <div className="gallery-frame">
           <img src={group.images[activeImage]} alt={group.title} loading="lazy" decoding="async" />
           <button className="gallery-control prev" type="button" onClick={() => move(-1)} aria-label="Foto anterior">

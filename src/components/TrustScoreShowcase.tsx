@@ -118,7 +118,7 @@ export default function TrustScoreShowcase({ rating, scores, photos = defaultPho
           <small>{rating.comments} comentarios verificados</small>
         </div>
 
-        <div className="score-bars" aria-label="Puntuaciones del alojamiento">
+        <div className="score-bars" role="group" aria-label="Puntuaciones del alojamiento">
           {normalized.map((score, index) => (
             <div className="score-bar-row" style={{ "--bar-width": `${score.width}%`, "--bar-delay": `${index * 70}ms` } as CSSProperties} key={score.label}>
               <div className="score-bar-head">
@@ -149,7 +149,7 @@ export default function TrustScoreShowcase({ rating, scores, photos = defaultPho
         </div>
       </div>
 
-      <div className="trust-photo-stage" aria-label="Fotos destacadas del apartamento">
+      <div className="trust-photo-stage" role="group" aria-label="Fotos destacadas del apartamento">
         {photos.map((photo, index) => {
           const depth = index + 1;
           const y = photo.offset + (progress - 0.5) * (index % 2 === 0 ? -42 : 36) + pointer.y * depth * -18;
