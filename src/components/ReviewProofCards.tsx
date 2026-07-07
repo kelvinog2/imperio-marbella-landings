@@ -10,6 +10,7 @@ type Review = {
 
 type Props = {
   reviews: Review[];
+  images?: string[];
 };
 
 const meta = [
@@ -39,7 +40,7 @@ const meta = [
   }
 ];
 
-export default function ReviewProofCards({ reviews }: Props) {
+export default function ReviewProofCards({ reviews, images = [] }: Props) {
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -69,6 +70,7 @@ export default function ReviewProofCards({ reviews }: Props) {
       {reviews.map((review, index) => {
         const item = meta[index % meta.length];
         const Icon = item.icon;
+        const image = images.length > 0 ? images[index % images.length] : item.image;
         const lift = (scrollProgress - 0.5) * (index % 2 === 0 ? -34 : 26);
         const isActive = activeIndex === index;
 
@@ -82,14 +84,14 @@ export default function ReviewProofCards({ reviews }: Props) {
           >
             <a className="review-card-link" href={item.href} aria-label={`Ver ${item.theme.toLowerCase()} mencionado por ${review.author}`}>
               <div className="review-media">
-                <img src={item.image} alt="" loading="lazy" decoding="async" />
+                <img src={image} alt="" loading="lazy" decoding="async" />
                 <span className="review-theme">
                   <Icon size={16} aria-hidden="true" />
                   {item.theme}
                 </span>
               </div>
               <div className="review-body">
-                <span className="review-score">9,8</span>
+                <span className="review-score">10</span>
                 <blockquote>“{review.quote}”</blockquote>
                 <footer>
                   <strong>{review.author}</strong>

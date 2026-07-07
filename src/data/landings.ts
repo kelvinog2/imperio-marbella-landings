@@ -135,7 +135,7 @@ export const apartment = {
       answer: "La capacidad indicada es de hasta 4 adultos, con un dormitorio y sala de estar con sofá-cama."
     },
     {
-      question: "¿Cómo uso el código promocional?",
+      question: "¿Cómo uso el código de mi tarjeta?",
       answer: "Escríbenos por WhatsApp con tu código, fechas y número de huéspedes. Te responderemos con una tarifa especial de reserva directa."
     }
   ]
@@ -278,7 +278,7 @@ export const apartment2 = {
     },
     {
       question: "¿Como consigo tarifa directa?",
-      answer: "Genera tu codigo promocional en la landing y envianoslo por WhatsApp con tus fechas."
+      answer: "Envíanos por WhatsApp el código de tu tarjeta, fechas y número de huéspedes. Te responderemos con precio especial de reserva directa."
     }
   ]
 };
@@ -419,8 +419,8 @@ export const apartment3 = {
       answer: "Cuenta con un dormitorio, sofa cama en la sala de estar y capacidad para una estancia comoda."
     },
     {
-      question: "¿Como uso el descuento?",
-      answer: "Genera tu codigo promocional y envianoslo por WhatsApp junto con tus fechas."
+      question: "¿Como solicito precio especial?",
+      answer: "Envíanos por WhatsApp el código de tu tarjeta, fechas y número de huéspedes. Te responderemos con precio especial de reserva directa."
     }
   ]
 };
@@ -429,28 +429,28 @@ export const apartments = [apartment, apartment2, apartment3] as const;
 export type Apartment = (typeof apartments)[number];
 
 export const promo = {
-  label: "Ruleta promocional exclusiva",
-  title: "Ya estás en Imperio: participa por un descuento especial.",
+  label: "Tarjeta promocional directa",
+  title: "Tu tarjeta ya activa precio especial.",
   text:
-    "Genera una sola vez tu código promocional único y envíanoslo por WhatsApp con tus fechas, número de huéspedes y apartamento favorito.",
+    "Escríbenos por WhatsApp con el código de tu tarjeta, fechas, número de huéspedes y apartamento favorito. Te respondemos con una tarifa directa.",
   whatsappMessage:
-    "Hola, he llegado desde la landing de Apartamentos Imperio. Quiero consultar tarifa directa para Marbella."
+    "Hola, he recibido una tarjeta promocional de Apartamentos Imperio. Quiero solicitar precio especial. Mi código es: "
 };
 
 export const whatsappHref = `https://wa.me/34600000000?text=${encodeURIComponent(promo.whatsappMessage)}`;
 
 export const directBenefits = [
   {
-    title: "Mejor precio directo",
-    text: "Tarifa especial para clientes que llegan desde tarjeta, QR o recomendación."
+    title: "Precio especial con tarjeta",
+    text: "La ventaja ya viene en tu tarjeta promocional. Solo tienes que compartir el código por WhatsApp."
   },
   {
     title: "Atención por WhatsApp",
-    text: "Consulta fechas, huéspedes y preferencias sin pasar por formularios largos."
+    text: "Consulta fechas, huéspedes y preferencias sin formularios largos ni pasos confusos."
   },
   {
-    title: "Código instantáneo",
-    text: "Puedes desbloquear 5%, 10% o 15% de descuento para pedir una tarifa directa."
+    title: "Respuesta directa",
+    text: "Te indicamos disponibilidad, precio especial y siguientes pasos en una conversación sencilla."
   },
   {
     title: "Valoración verificada",
@@ -622,17 +622,17 @@ export const interestPoints = [
 export const mainLanding = {
   slug: "",
   navLabel: "Inicio",
-  title: "Apartamentos Imperio Marbella | Código promocional exclusivo",
+  title: "Apartamentos Imperio Marbella | Tarjeta promocional directa",
   metaDescription:
-    "Landing principal de Apartamentos Imperio Marbella: apartamentos con valoración excepcional, beneficios de reserva directa y código promocional exclusivo por WhatsApp.",
+    "Landing principal de Apartamentos Imperio Marbella: apartamentos con valoración excepcional, beneficios de reserva directa y precio especial por WhatsApp.",
   heroWord: "IMPERIO",
-  eyebrow: "Código promocional exclusivo",
+  eyebrow: "Tarjeta promocional directa",
   headline: "Descubre Marbella con precio especial por reserva directa.",
   intro:
-    "Si has recibido una tarjeta con QR, genera tu código promocional y envíanoslo por WhatsApp con tus fechas. Te preparamos una tarifa directa para alojarte en Apartamentos Imperio.",
+    "Si has llegado con una tarjeta de Apartamentos Imperio, escríbenos por WhatsApp con tu código, fechas y huéspedes. Te enviamos precio especial directo.",
   heroImage: "/assets/main/hero-marbella.webp",
   heroImageSmall: "/assets/main/hero-marbella-sm.webp",
-  cta: "Generar descuento",
+  cta: "Solicitar precio",
   primaryHref: "#reserva-directa",
   secondaryCta: "Ver apartamentos",
   secondaryHref: "#apartamentos",
@@ -653,7 +653,7 @@ export const landing = {
   intro:
     "Un apartamento amplio, limpio y totalmente equipado para moverte por Marbella a pie, descansar con calma y reservar directamente con una tarifa especial.",
   heroImage: "/assets/apartamento/imperio-12.webp",
-  cta: "Reservar directo",
+  cta: "Solicitar precio",
   primaryHref: "#reserva-directa",
   secondaryCta: "Ver en Booking",
   secondaryHref: apartment.bookingUrl,
@@ -674,7 +674,7 @@ export const landing2 = {
   intro:
     "125 m2, dos dormitorios, terraza, parking y una ubicacion perfecta para combinar centro historico, restaurantes y Playa de Venus sin depender del coche.",
   heroImage: "/assets/imperio-2/imperio-2-01.webp",
-  cta: "Reservar directo",
+  cta: "Solicitar precio",
   primaryHref: "#reserva-directa",
   secondaryCta: "Ver en Booking",
   secondaryHref: apartment2.bookingUrl,
@@ -695,7 +695,7 @@ export const landing3 = {
   intro:
     "Un apartamento reformado frente a la playa, con terraza, vistas, WiFi y la energia del puerto deportivo para vivir Marbella caminando.",
   heroImage: "/assets/imperio-3/imperio-3-01.webp",
-  cta: "Reservar directo",
+  cta: "Solicitar precio",
   primaryHref: "#reserva-directa",
   secondaryCta: "Ver en Booking",
   secondaryHref: apartment3.bookingUrl,

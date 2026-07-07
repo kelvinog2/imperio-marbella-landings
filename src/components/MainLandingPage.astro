@@ -1,9 +1,8 @@
 ---
-import { apartment, apartmentCards, directBenefits, mainLanding, whatsappHref } from "@/data/landings";
+import { apartment, apartmentCards, mainLanding, whatsappHref } from "@/data/landings";
 import DirectBookingSection from "./DirectBookingSection.astro";
 import Footer from "./Footer.astro";
 import Hero from "./Hero.astro";
-import LocationExplorer from "./LocationExplorer";
 import SiteHeader from "./SiteHeader.astro";
 
 const navItems = [
@@ -14,66 +13,45 @@ const navItems = [
   { label: "Reserva directa", href: "#reserva-directa" }
 ];
 
-const galleryItems = [
+const apartmentGalleryGroups = [
   {
-    image: "/assets/main-gallery/gallery-01.webp",
-    apartment: "Imperio 1",
-    label: "Salón con terraza",
-    variant: "tile-large"
+    id: "main-gallery-imperio-1",
+    name: "Imperio 1",
+    subtitle: "Centro, terraza y parking",
+    href: "/imperio-1/",
+    images: [
+      { src: "/assets/main-gallery/gallery-01.webp", label: "Salón con terraza", featured: true },
+      { src: "/assets/main-gallery/gallery-04.webp", label: "Dormitorio preparado" },
+      { src: "/assets/main-gallery/gallery-07.webp", label: "Cocina equipada" }
+    ]
   },
   {
-    image: "/assets/main-gallery/gallery-02.webp",
-    apartment: "Imperio 2",
-    label: "125 m2 en Marbella centro",
-    variant: "tile-wide"
+    id: "main-gallery-imperio-2",
+    name: "Imperio 2",
+    subtitle: "125 m2, jacuzzi y luz",
+    href: "/imperio-2/",
+    images: [
+      { src: "/assets/main-gallery/gallery-02.webp", label: "Apartamento amplio", featured: true },
+      { src: "/assets/main-gallery/gallery-05.webp", label: "Jacuzzi y descanso" },
+      { src: "/assets/main-gallery/gallery-08.webp", label: "Terraza y luz" }
+    ]
   },
   {
-    image: "/assets/main-gallery/gallery-03.webp",
-    apartment: "Imperio 3",
-    label: "Puerto deportivo y playa",
-    variant: "tile-tall"
-  },
-  {
-    image: "/assets/main-gallery/gallery-04.webp",
-    apartment: "Imperio 1",
-    label: "Dormitorio preparado",
-    variant: "tile-small"
-  },
-  {
-    image: "/assets/main-gallery/gallery-05.webp",
-    apartment: "Imperio 2",
-    label: "Jacuzzi y descanso",
-    variant: "tile-small"
-  },
-  {
-    image: "/assets/main-gallery/gallery-06.webp",
-    apartment: "Imperio 3",
-    label: "Interior práctico",
-    variant: "tile-small"
-  },
-  {
-    image: "/assets/main-gallery/gallery-07.webp",
-    apartment: "Imperio 1",
-    label: "Cocina equipada",
-    variant: "tile-wide"
-  },
-  {
-    image: "/assets/main-gallery/gallery-08.webp",
-    apartment: "Imperio 2",
-    label: "Terraza y luz",
-    variant: "tile-small mobile-soft-hide"
-  },
-  {
-    image: "/assets/main-gallery/gallery-09.webp",
-    apartment: "Imperio 3",
-    label: "Balcón junto al mar",
-    variant: "tile-small mobile-soft-hide"
+    id: "main-gallery-imperio-3",
+    name: "Imperio 3",
+    subtitle: "Puerto deportivo y playa",
+    href: "/imperio-3/",
+    images: [
+      { src: "/assets/main-gallery/gallery-03.webp", label: "Junto al puerto", featured: true },
+      { src: "/assets/main-gallery/gallery-06.webp", label: "Interior práctico" },
+      { src: "/assets/main-gallery/gallery-09.webp", label: "Balcón junto al mar" }
+    ]
   }
 ];
 ---
 
 <main class="page-shell main-landing-shell">
-  <SiteHeader navItems={navItems} ctaHref="#reserva-directa" ctaLabel="Descuento" />
+  <SiteHeader navItems={navItems} ctaHref={whatsappHref} ctaLabel="WhatsApp" />
   <Hero landing={mainLanding} />
 
   <section class="main-proof-band" aria-label="Promoción de reserva directa">
@@ -84,11 +62,11 @@ const galleryItems = [
         <em>Excepcional</em>
       </div>
       <p>
-        Apartamentos Imperio reúne estancias con valoración excepcional en Marbella. Si llegaste por
-        una tarjeta especial, puedes generar tu descuento directo una sola vez y usarlo en cualquiera
-        de las páginas.
+        Has llegado a la colección Imperio. Si tienes una tarjeta promocional, escríbenos por
+        WhatsApp con tu código, fechas y número de huéspedes. Te responderemos con precio especial
+        de reserva directa.
       </p>
-      <a class="button button-primary" href="#reserva-directa">Generar descuento</a>
+      <a class="button button-primary" href={whatsappHref}>Solicitar precio especial</a>
     </div>
   </section>
 
@@ -96,7 +74,7 @@ const galleryItems = [
     <div class="main-section-heading">
       <span>Nuestros apartamentos</span>
       <h2 id="apartments-title">Elige tu Imperio en Marbella</h2>
-      <p>Compara rápido, contacta directamente y reserva con una ventaja que no aparece en los portales.</p>
+      <p>Compara rápido, abre la ficha que te guste y contacta por WhatsApp para recibir tu tarifa directa.</p>
     </div>
 
     <div class="apartment-card-grid">
@@ -135,43 +113,57 @@ const galleryItems = [
     </div>
   </section>
 
-  <LocationExplorer client:visible />
-
-  <section class="direct-benefits-mini" aria-labelledby="benefits-title">
+  <section class="main-gallery" id="galeria" aria-labelledby="main-gallery-title">
     <div class="main-section-heading">
-      <span>Beneficios de reservar directo</span>
-      <h2 id="benefits-title">Tu código convierte una consulta en una tarifa especial</h2>
+      <span>Elige tu estancia</span>
+      <h2 id="main-gallery-title">Tres formas de vivir Marbella, una tarifa especial directa</h2>
+      <p>Descubre cuál encaja con tu viaje: terraza en el centro, amplitud con jacuzzi o puerto deportivo junto al mar.</p>
     </div>
-    <div class="direct-benefit-grid">
-      {directBenefits.map((benefit) => (
-        <article>
-          <span aria-hidden="true"></span>
-          <h3>{benefit.title}</h3>
-          <p>{benefit.text}</p>
-        </article>
+
+    <div class="apartment-gallery-tabs">
+      {apartmentGalleryGroups.map((group, index) => (
+        <input
+          class="apartment-gallery-radio"
+          type="radio"
+          name="main-apartment-gallery"
+          id={group.id}
+          checked={index === 0}
+        />
       ))}
+
+      <div class="apartment-gallery-controls" aria-label="Seleccionar galería de apartamento">
+        {apartmentGalleryGroups.map((group) => (
+          <label class="apartment-gallery-tab" for={group.id}>
+            <strong>{group.name}</strong>
+            <span>{group.subtitle}</span>
+          </label>
+        ))}
+      </div>
+
+      <div class="apartment-gallery-panels">
+        {apartmentGalleryGroups.map((group) => (
+          <article class="apartment-gallery-panel">
+            <div class="apartment-gallery-panel-copy">
+              <span>{group.subtitle}</span>
+              <h3>{group.name}</h3>
+              <p>Explora sus espacios clave y entra en la ficha para ver más fotos, detalles y solicitar tu precio especial por WhatsApp.</p>
+              <a class="button button-primary" href={group.href}>Ver {group.name}</a>
+            </div>
+            <div class="apartment-gallery-grid">
+              {group.images.map((image) => (
+                <figure class:list={["apartment-gallery-shot", image.featured && "is-featured"]}>
+                  <img src={image.src} alt={`${group.name}: ${image.label}`} width="780" height="560" loading="lazy" decoding="async" />
+                  <figcaption>{image.label}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   </section>
 
   <DirectBookingSection compact />
-
-  <section class="main-gallery" id="galeria" aria-labelledby="main-gallery-title">
-    <div class="main-section-heading">
-      <span>Galería de la experiencia Marbella</span>
-      <h2 id="main-gallery-title">Mar, centro y apartamentos listos para llegar</h2>
-    </div>
-    <div class="main-gallery-mosaic">
-      {galleryItems.map((item) => (
-        <figure class:list={["main-gallery-tile", item.variant]}>
-          <img src={item.image} alt={`${item.apartment}: ${item.label}`} width="720" height="520" loading="lazy" decoding="async" />
-          <figcaption>
-            <span>{item.apartment}</span>
-            <strong>{item.label}</strong>
-          </figcaption>
-        </figure>
-      ))}
-    </div>
-  </section>
 
   <section class="main-contact-strip">
     <div>

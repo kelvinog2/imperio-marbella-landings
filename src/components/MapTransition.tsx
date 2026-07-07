@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
-import { Html } from "@react-three/drei";
 import * as THREE from "three";
 import { MapPin, Navigation, Power } from "lucide-react";
 
@@ -26,9 +26,6 @@ type MapSceneProps = {
   sketch: string;
   render: string;
   progress: number;
-  apartmentName: string;
-  address: string;
-  routeUrl: string;
 };
 
 const vertexShader = `
@@ -76,27 +73,6 @@ const fragmentShader = `
   }
 `;
 
-const pins = [
-  {
-    label: "IMPERIO 1",
-    detail: "Calle María Auxiliadora 1",
-    href: "#reserva-directa",
-    position: [0.5, -0.08, 0.04] as const
-  },
-  {
-    label: "Playa de Venus",
-    detail: "3 min a pie",
-    href: "https://www.google.com/maps/search/?api=1&query=Playa%20de%20Venus%20Marbella",
-    position: [2.1, -1.32, 0.04] as const
-  },
-  {
-    label: "Centro histórico",
-    detail: "Paseo llano",
-    href: "https://www.google.com/maps/search/?api=1&query=Plaza%20de%20los%20Naranjos%20Marbella",
-    position: [2.0, 1.15, 0.04] as const
-  }
-];
-
 function ShaderPlane({ sketch, render, progress }: MapSceneProps) {
   const materialRef = useRef<THREE.ShaderMaterial | null>(null);
   const sketchTexture = useLoader(THREE.TextureLoader, sketch);
@@ -136,69 +112,6 @@ function ShaderPlane({ sketch, render, progress }: MapSceneProps) {
   );
 }
 
-function MapPins({
-  progress,
-  apartmentName,
-  address,
-  routeUrl
-}: {
-  progress: number;
-  apartmentName: string;
-  address: string;
-  routeUrl: string;
-}) {
-  const opacity = Math.max(0, Math.min(1, (progress - 0.56) / 0.24));
-  const pins = [
-    {
-      label: apartmentName,
-      detail: address,
-      href: routeUrl,
-      position: [0.5, -0.08, 0.04] as const
-    },
-    {
-      label: "Playa de Venus",
-      detail: "A pocos minutos",
-      href: "https://www.google.com/maps/search/?api=1&query=Playa%20de%20Venus%20Marbella",
-      position: [2.1, -1.32, 0.04] as const
-    },
-    {
-      label: "Centro historico",
-      detail: "Paseo llano",
-      href: "https://www.google.com/maps/search/?api=1&query=Plaza%20de%20los%20Naranjos%20Marbella",
-      position: [2.0, 1.15, 0.04] as const
-    }
-  ];
-
-  return (
-    <>
-      {pins.map((pin, index) => (
-        <Html center position={pin.position} zIndexRange={[2, 0]} key={pin.label}>
-          <a
-            className="map-hotspot"
-            href={pin.href}
-            target={pin.href.startsWith("http") ? "_blank" : undefined}
-            rel={pin.href.startsWith("http") ? "noreferrer" : undefined}
-            style={{
-              opacity,
-              transform: `translateY(${(1 - opacity) * 14}px) scale(${0.92 + opacity * 0.08})`,
-              transitionDelay: `${index * 80}ms`,
-              pointerEvents: opacity > 0.72 ? "auto" : "none"
-            }}
-          >
-            <span className="map-hotspot-dot">
-              <MapPin size={16} aria-hidden="true" />
-            </span>
-            <span className="map-hotspot-label">
-              <strong>{pin.label}</strong>
-              <small>{pin.detail}</small>
-            </span>
-          </a>
-        </Html>
-      ))}
-    </>
-  );
-}
-
 function MapShaderScene(props: MapSceneProps) {
   return (
     <Canvas
@@ -207,9 +120,25 @@ function MapShaderScene(props: MapSceneProps) {
       dpr={[1, 1.6]}
     >
       <ShaderPlane {...props} />
-      <MapPins progress={props.progress} apartmentName={props.apartmentName} address={props.address} routeUrl={props.routeUrl} />
     </Canvas>
   );
+}
+
+function getMapMarker(apartmentName: string) {
+  const isImperio3 = apartmentName.includes("3");
+
+  return {
+    label: apartmentName,
+    markerX: isImperio3 ? "43%" : "38.6%",
+    markerY: isImperio3 ? "62%" : "10.5%",
+    markerMobileX: isImperio3 ? "58%" : "58%",
+    markerMobileY: isImperio3 ? "58%" : "28%",
+    coverX: "44.5%",
+    coverY: "32%",
+    coverMobileX: "58%",
+    coverMobileY: "34%",
+    coverOriginalPin: isImperio3
+  };
 }
 
 export default function MapTransition({ map, nearby, address, apartmentName = "IMPERIO" }: Props) {
@@ -219,6 +148,17 @@ export default function MapTransition({ map, nearby, address, apartmentName = "I
   const revealedRef = useRef(0);
   const [assets, setAssets] = useState({ sketch: map.light, render: map.satellite });
   const routeUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+  const mapMarker = getMapMarker(apartmentName);
+  const markerStyle = {
+    "--marker-x": mapMarker.markerX,
+    "--marker-y": mapMarker.markerY,
+    "--marker-mobile-x": mapMarker.markerMobileX,
+    "--marker-mobile-y": mapMarker.markerMobileY,
+    "--cover-x": mapMarker.coverX,
+    "--cover-y": mapMarker.coverY,
+    "--cover-mobile-x": mapMarker.coverMobileX,
+    "--cover-mobile-y": mapMarker.coverMobileY
+  } as CSSProperties;
 
   useEffect(() => {
     const media = window.matchMedia("(max-width: 640px)");
@@ -260,7 +200,14 @@ export default function MapTransition({ map, nearby, address, apartmentName = "I
   return (
     <section className="map-section" id="ubicacion" ref={sectionRef}>
       <div className="map-canvas-layer">
-        <MapShaderScene sketch={assets.sketch} render={assets.render} progress={progress} apartmentName={apartmentName} address={address} routeUrl={routeUrl} />
+        <MapShaderScene sketch={assets.sketch} render={assets.render} progress={progress} />
+        <div className="map-procedural-layer" style={markerStyle} aria-hidden="true">
+          {mapMarker.coverOriginalPin && <span className="map-pin-cover"></span>}
+          <span className="map-procedural-pin">
+            <span className="map-procedural-pin-head"></span>
+            <span className="map-procedural-pin-label">{mapMarker.label}</span>
+          </span>
+        </div>
       </div>
 
       <div className="map-content">

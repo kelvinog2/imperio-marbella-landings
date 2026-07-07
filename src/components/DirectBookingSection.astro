@@ -1,21 +1,51 @@
 ---
-import { apartment as defaultApartment, directBenefits, promo, type Apartment } from "@/data/landings";
-import DirectBookingInteractive from "./DirectBookingInteractive";
+import { directBenefits, promo, type Apartment } from "@/data/landings";
+import DirectBenefitFlow from "./DirectBenefitFlow";
 
 interface Props {
   compact?: boolean;
   apartment?: Apartment;
 }
 
-const { compact = false, apartment = defaultApartment } = Astro.props;
+const { compact = false, apartment } = Astro.props;
+const targetName = apartment?.shortName ?? "Apartamentos Imperio";
+const bookingUrl = apartment?.bookingUrl ?? "/#apartamentos";
+const bookingLabel = apartment ? "Comparar en Booking.com" : "Ver apartamentos";
+const bookingIsExternal = bookingUrl.startsWith("http");
+const whatsappMessage = apartment
+  ? `Hola, he recibido una tarjeta promocional de Apartamentos Imperio. Quiero solicitar precio especial para ${apartment.shortName}. Mi código es: `
+  : "Hola, he recibido una tarjeta promocional de Apartamentos Imperio. Quiero solicitar precio especial. Mi código es: ";
+const directWhatsappHref = `https://wa.me/34600000000?text=${encodeURIComponent(whatsappMessage)}`;
 ---
 
 <section class:list={["direct-booking", compact && "direct-booking-compact"]} id="reserva-directa" aria-labelledby="direct-booking-title">
-  <DirectBookingInteractive
-    client:visible
-    apartmentName={apartment.shortName}
-    bookingUrl={apartment.bookingUrl}
-    benefits={directBenefits}
-    promo={promo}
-  />
+  <div class="direct-booking-inner direct-booking-simple">
+    <div class="direct-copy">
+      <span class="section-kicker">{promo.label}</span>
+      <h2 id="direct-booking-title">{promo.title}</h2>
+      <p>{promo.text}</p>
+      <div class="direct-actions">
+        <a class="button button-primary" href={directWhatsappHref}>Solicitar precio especial por WhatsApp</a>
+        <a
+          class="button button-outline"
+          href={bookingUrl}
+          target={bookingIsExternal ? "_blank" : undefined}
+          rel={bookingIsExternal ? "noreferrer" : undefined}
+        >
+          {bookingLabel}
+        </a>
+      </div>
+    </div>
+
+    <aside class="direct-instruction-card" aria-label={`Pasos para solicitar precio especial en ${targetName}`}>
+      <span>Cómo funciona</span>
+      <ol class="direct-steps">
+        <li>Elige el apartamento que más encaja contigo.</li>
+        <li>Escríbenos por WhatsApp con el código de tu tarjeta.</li>
+        <li>Indica fechas, huéspedes y dudas. Te respondemos con tarifa directa.</li>
+      </ol>
+    </aside>
+
+    <DirectBenefitFlow client:visible benefits={directBenefits} />
+  </div>
 </section>
