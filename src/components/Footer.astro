@@ -1,17 +1,32 @@
 ---
-import { apartmentCards, whatsappHref } from "@/data/landings";
+import { apartmentCards as defaultApartmentCards, whatsappHref as defaultWhatsappHref } from "@/data/landings";
+import type { ApartmentCardView } from "@/lib/content";
+
+interface Props {
+  apartmentCards?: readonly ApartmentCardView[];
+  whatsappHref?: string;
+  brand?: string;
+  tagline?: string;
+}
+
+const {
+  apartmentCards = defaultApartmentCards,
+  whatsappHref = defaultWhatsappHref,
+  brand = "Apartamentos Imperio",
+  tagline = "Reserva directa en Marbella centro, Playa de Venus y Puerto Deportivo."
+} = Astro.props;
 ---
 
 <footer class="footer" id="contacto">
   <div class="footer-brand">
     <img src="/assets/apartamento/imperio-logo.png" alt="" width="84" height="45" loading="lazy" />
     <div>
-      <strong>Apartamentos Imperio</strong>
-      <p>Reserva directa en Marbella centro, Playa de Venus y Puerto Deportivo.</p>
+      <strong>{brand}</strong>
+      <p>{tagline}</p>
     </div>
   </div>
 
-  <nav class="footer-links" aria-label="Páginas de Apartamentos Imperio">
+  <nav class="footer-links" aria-label="Paginas de Apartamentos Imperio">
     <a href="/">Inicio</a>
     {apartmentCards.map((item) => <a href={item.href}>{item.name}</a>)}
     <a href="/#reserva-directa">Reserva directa</a>

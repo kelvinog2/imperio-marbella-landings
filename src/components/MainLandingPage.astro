@@ -1,5 +1,13 @@
 ---
-import { apartment, apartmentCards, mainLanding, whatsappHref } from "@/data/landings";
+import {
+  apartment as defaultApartment,
+  apartmentCards as defaultApartmentCards,
+  directBenefits as defaultDirectBenefits,
+  mainLanding as defaultMainLanding,
+  promo as defaultPromo,
+  whatsappHref as defaultWhatsappHref
+} from "@/data/landings";
+import type { ApartmentCardView, MainGalleryGroup } from "@/lib/content";
 import DirectBookingSection from "./DirectBookingSection.astro";
 import Footer from "./Footer.astro";
 import Hero from "./Hero.astro";
@@ -13,7 +21,17 @@ const navItems = [
   { label: "Reserva directa", href: "#reserva-directa" }
 ];
 
-const apartmentGalleryGroups = [
+interface Props {
+  apartment?: typeof defaultApartment;
+  apartmentCards?: readonly ApartmentCardView[];
+  directBenefits?: typeof defaultDirectBenefits | { title: string; text: string }[];
+  mainLanding?: typeof defaultMainLanding;
+  promo?: typeof defaultPromo;
+  whatsappHref?: string;
+  galleryGroups?: MainGalleryGroup[];
+}
+
+const defaultApartmentGalleryGroups = [
   {
     id: "main-gallery-imperio-1",
     name: "Imperio 1",
@@ -48,6 +66,16 @@ const apartmentGalleryGroups = [
     ]
   }
 ];
+
+const {
+  apartment = defaultApartment,
+  apartmentCards = defaultApartmentCards,
+  directBenefits = defaultDirectBenefits,
+  mainLanding = defaultMainLanding,
+  promo = defaultPromo,
+  whatsappHref = defaultWhatsappHref,
+  galleryGroups = defaultApartmentGalleryGroups
+} = Astro.props;
 ---
 
 <main class="page-shell main-landing-shell">
@@ -121,7 +149,7 @@ const apartmentGalleryGroups = [
     </div>
 
     <div class="apartment-gallery-tabs">
-      {apartmentGalleryGroups.map((group, index) => (
+      {galleryGroups.map((group, index) => (
         <input
           class="apartment-gallery-radio"
           type="radio"
@@ -132,7 +160,7 @@ const apartmentGalleryGroups = [
       ))}
 
       <div class="apartment-gallery-controls" aria-label="Seleccionar galería de apartamento">
-        {apartmentGalleryGroups.map((group) => (
+        {galleryGroups.map((group) => (
           <label class="apartment-gallery-tab" for={group.id}>
             <strong>{group.name}</strong>
             <span>{group.subtitle}</span>
@@ -141,7 +169,7 @@ const apartmentGalleryGroups = [
       </div>
 
       <div class="apartment-gallery-panels">
-        {apartmentGalleryGroups.map((group) => (
+        {galleryGroups.map((group) => (
           <article class="apartment-gallery-panel">
             <div class="apartment-gallery-panel-copy">
               <span>{group.subtitle}</span>
@@ -163,7 +191,7 @@ const apartmentGalleryGroups = [
     </div>
   </section>
 
-  <DirectBookingSection compact />
+  <DirectBookingSection compact apartment={apartment} promo={promo} directBenefits={directBenefits} whatsappHref={whatsappHref} />
 
   <section class="main-contact-strip">
     <div>
@@ -173,5 +201,5 @@ const apartmentGalleryGroups = [
     <a class="button button-light" href={whatsappHref}>Contactar por WhatsApp</a>
   </section>
 
-  <Footer />
+  <Footer apartmentCards={apartmentCards} whatsappHref={whatsappHref} brand={apartment.brand} />
 </main>

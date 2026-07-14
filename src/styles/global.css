@@ -344,11 +344,12 @@ button {
   overflow: hidden;
   margin: 0;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(3.8rem, 11vw, 10.7rem);
+  font-size: clamp(2.8rem, var(--hero-word-vw, 11vw), 10.7rem);
   font-weight: 500;
   line-height: 0.86;
   letter-spacing: 0;
   text-transform: uppercase;
+  max-width: 100%;
 }
 
 .hero-letter {
@@ -370,21 +371,31 @@ button {
 }
 
 .hero-panel h1 {
+  display: -webkit-box;
+  overflow: hidden;
   margin: 0 0 20px;
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(2.2rem, 4vw, 3.75rem);
   font-style: italic;
   font-weight: 500;
   line-height: 0.98;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 .hero-panel p {
+  display: -webkit-box;
+  overflow: hidden;
   max-width: 40rem;
   margin: 0 0 24px;
   color: rgba(255, 255, 255, 0.88);
   font-size: clamp(1.08rem, 1.45vw, 1.32rem);
   font-weight: 650;
   line-height: 1.42;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
 }
 
 .hero-actions {
@@ -428,7 +439,7 @@ button {
   }
 
   .hero-word {
-    font-size: clamp(4rem, 9vw, 8.8rem);
+    font-size: clamp(2.8rem, min(var(--hero-word-vw, 9vw), 9vw), 8.8rem);
   }
 
   .hero-panel h1 {
@@ -1006,12 +1017,17 @@ button {
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(1.5rem, 2.3vw, 2.05rem);
   line-height: 1.05;
+  overflow-wrap: anywhere;
 }
 
 .apartment-card-body p {
+  display: -webkit-box;
+  overflow: hidden;
   min-height: 68px;
   margin: 0;
   color: #425e66;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 .apartment-card-body ul {
@@ -3261,7 +3277,7 @@ button {
   }
 
   .hero-word {
-    font-size: clamp(3.25rem, 17.5vw, 5.2rem);
+    font-size: clamp(2.1rem, var(--hero-word-mobile-vw, 17.5vw), 5.2rem);
   }
 
   .hero-panel h1 {

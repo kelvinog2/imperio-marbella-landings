@@ -1,8 +1,18 @@
 ---
 import MainLandingPage from "@/components/MainLandingPage.astro";
-import { apartment, apartmentCards, baseUrl, mainLanding, promo } from "@/data/landings";
+import { baseUrl } from "@/data/landings";
+import { getMainPageContent } from "@/lib/content";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
+const {
+  apartment,
+  apartmentCards,
+  directBenefits,
+  galleryGroups,
+  mainLanding,
+  promo,
+  whatsappHref
+} = await getMainPageContent();
 const canonical = `${baseUrl}/`;
 const image = new URL(mainLanding.heroImage, baseUrl).toString();
 const jsonLd = [
@@ -67,5 +77,13 @@ const jsonLd = [
   image={image}
   jsonLd={jsonLd}
 >
-  <MainLandingPage />
+  <MainLandingPage
+    apartment={apartment}
+    apartmentCards={apartmentCards}
+    directBenefits={directBenefits}
+    galleryGroups={galleryGroups}
+    mainLanding={mainLanding}
+    promo={promo}
+    whatsappHref={whatsappHref}
+  />
 </BaseLayout>

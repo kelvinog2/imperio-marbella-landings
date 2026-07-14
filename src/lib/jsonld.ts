@@ -11,7 +11,8 @@ const absolute = (path: string) => new URL(path, baseUrl).toString();
 
 function getFactNumber(apartment: Apartment, keyword: string, fallback: number) {
   const fact = apartment.quickFacts.find((item) => item.label.toLowerCase().includes(keyword));
-  const value = Number.parseInt(fact?.value.replace(/[^\d]/g, "") ?? "", 10);
+  const match = fact?.value.match(/\d+(?:[.,]\d+)?/);
+  const value = Number.parseFloat(match?.[0].replace(",", ".") ?? "");
   return Number.isFinite(value) ? value : fallback;
 }
 

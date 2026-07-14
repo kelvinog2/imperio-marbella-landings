@@ -118,6 +118,12 @@ export const apartment = {
     lightSmall: "/assets/map/mapa-sm.webp",
     satellite: "/assets/map/satelital.webp",
     satelliteSmall: "/assets/map/satelital-sm.webp",
+    marker: {
+      x: "38.6%",
+      y: "10.5%",
+      mobileX: "58%",
+      mobileY: "28%"
+    },
     embed:
       "https://www.google.com/maps?q=Calle%20Mar%C3%ADa%20Auxiliadora%201%2C%2029602%20Marbella%2C%20Espa%C3%B1a&output=embed"
   },
@@ -260,6 +266,12 @@ export const apartment2 = {
     lightSmall: "/assets/map/mapa-sm.webp",
     satellite: "/assets/map/satelital.webp",
     satelliteSmall: "/assets/map/satelital-sm.webp",
+    marker: {
+      x: "38.6%",
+      y: "10.5%",
+      mobileX: "58%",
+      mobileY: "28%"
+    },
     embed:
       "https://www.google.com/maps?q=Calle%20Mar%C3%ADa%20Auxiliadora%2C%2029602%20Marbella%2C%20Espa%C3%B1a&output=embed"
   },
@@ -402,6 +414,17 @@ export const apartment3 = {
     lightSmall: "/assets/map/mapa-sm.webp",
     satellite: "/assets/map/satelital.webp",
     satelliteSmall: "/assets/map/satelital-sm.webp",
+    marker: {
+      x: "43%",
+      y: "62%",
+      mobileX: "58%",
+      mobileY: "58%",
+      coverX: "44.5%",
+      coverY: "32%",
+      coverMobileX: "58%",
+      coverMobileY: "34%",
+      coverOriginalPin: true
+    },
     embed:
       "https://www.google.com/maps?q=Avenida%20Duque%20de%20Ahumada%209%2C%2029602%20Marbella%2C%20Espa%C3%B1a&output=embed"
   },
@@ -647,7 +670,7 @@ export const landing = {
   title: "Apartamento IMPERIO 1 - Marbella centro",
   metaDescription:
     "Apartamento IMPERIO 1 en Marbella centro: 9,8 excepcional, a 3 minutos de Playa de Venus, terraza, parking privado, WiFi y tarifa especial por reserva directa.",
-  heroWord: "IMPERIO",
+  heroWord: "IMPERIO 1",
   eyebrow: "Marbella centro",
   headline: "Terraza, playa y parking en una dirección imposible de mejorar.",
   intro:
@@ -668,7 +691,7 @@ export const landing2 = {
   title: "Apartamento IMPERIO 2 - Marbella centro",
   metaDescription:
     "Apartamento IMPERIO 2 en Marbella centro: 9,9 excepcional, 125 m2, 2 dormitorios, jacuzzi, terraza, parking gratis y tarifa especial por reserva directa.",
-  heroWord: "IMPERIO",
+  heroWord: "IMPERIO 2",
   eyebrow: "Marbella centro",
   headline: "Un apartamento amplio con jacuzzi a dos minutos de la playa.",
   intro:
@@ -689,7 +712,7 @@ export const landing3 = {
   title: "Apartamento IMPERIO 3 - Puerto deportivo Playa Marbella",
   metaDescription:
     "Apartamento IMPERIO 3 frente a la playa y junto al puerto deportivo de Marbella: 9,8 excepcional, terraza, vistas, WiFi, parking gratis y tarifa directa.",
-  heroWord: "IMPERIO",
+  heroWord: "IMPERIO 3",
   eyebrow: "Puerto deportivo",
   headline: "Despertar junto al puerto y bajar al mar en segundos.",
   intro:

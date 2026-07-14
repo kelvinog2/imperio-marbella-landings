@@ -1,21 +1,29 @@
 ---
-import { directBenefits, promo, type Apartment } from "@/data/landings";
+import { directBenefits as defaultDirectBenefits, promo as defaultPromo, type Apartment } from "@/data/landings";
+import { buildWhatsappHref } from "@/lib/whatsapp";
 import DirectBenefitFlow from "./DirectBenefitFlow";
 
 interface Props {
   compact?: boolean;
   apartment?: Apartment;
+  promo?: typeof defaultPromo;
+  directBenefits?: typeof defaultDirectBenefits | { title: string; text: string }[];
+  whatsappHref?: string;
 }
 
-const { compact = false, apartment } = Astro.props;
+const {
+  compact = false,
+  apartment,
+  promo = defaultPromo,
+  directBenefits = defaultDirectBenefits,
+  whatsappHref
+} = Astro.props;
 const targetName = apartment?.shortName ?? "Apartamentos Imperio";
 const bookingUrl = apartment?.bookingUrl ?? "/#apartamentos";
 const bookingLabel = apartment ? "Comparar en Booking.com" : "Ver apartamentos";
 const bookingIsExternal = bookingUrl.startsWith("http");
-const whatsappMessage = apartment
-  ? `Hola, he recibido una tarjeta promocional de Apartamentos Imperio. Quiero solicitar precio especial para ${apartment.shortName}. Mi código es: `
-  : "Hola, he recibido una tarjeta promocional de Apartamentos Imperio. Quiero solicitar precio especial. Mi código es: ";
-const directWhatsappHref = `https://wa.me/34600000000?text=${encodeURIComponent(whatsappMessage)}`;
+const whatsappMessage = apartment ? `${promo.whatsappMessage}${apartment.shortName}. ` : promo.whatsappMessage;
+const directWhatsappHref = whatsappHref ?? buildWhatsappHref(apartment?.phone, whatsappMessage);
 ---
 
 <section class:list={["direct-booking", compact && "direct-booking-compact"]} id="reserva-directa" aria-labelledby="direct-booking-title">
@@ -38,11 +46,11 @@ const directWhatsappHref = `https://wa.me/34600000000?text=${encodeURIComponent(
     </div>
 
     <aside class="direct-instruction-card" aria-label={`Pasos para solicitar precio especial en ${targetName}`}>
-      <span>Cómo funciona</span>
+      <span>Como funciona</span>
       <ol class="direct-steps">
-        <li>Elige el apartamento que más encaja contigo.</li>
-        <li>Escríbenos por WhatsApp con el código de tu tarjeta.</li>
-        <li>Indica fechas, huéspedes y dudas. Te respondemos con tarifa directa.</li>
+        <li>Elige el apartamento que mas encaja contigo.</li>
+        <li>Escribenos por WhatsApp con el codigo de tu tarjeta.</li>
+        <li>Indica fechas, huespedes y dudas. Te respondemos con tarifa directa.</li>
       </ol>
     </aside>
 

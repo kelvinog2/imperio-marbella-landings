@@ -16,10 +16,24 @@ type Props = {
     satellite: string;
     satelliteSmall: string;
     embed: string;
+    marker?: MapMarkerConfig;
   };
   nearby: NearbyItem[];
   address: string;
   apartmentName?: string;
+  marker?: MapMarkerConfig;
+};
+
+type MapMarkerConfig = {
+  x?: string;
+  y?: string;
+  mobileX?: string;
+  mobileY?: string;
+  coverX?: string;
+  coverY?: string;
+  coverMobileX?: string;
+  coverMobileY?: string;
+  coverOriginalPin?: boolean;
 };
 
 type MapSceneProps = {
@@ -124,31 +138,31 @@ function MapShaderScene(props: MapSceneProps) {
   );
 }
 
-function getMapMarker(apartmentName: string) {
+function getMapMarker(apartmentName: string, marker?: MapMarkerConfig) {
   const isImperio3 = apartmentName.includes("3");
 
   return {
     label: apartmentName,
-    markerX: isImperio3 ? "43%" : "38.6%",
-    markerY: isImperio3 ? "62%" : "10.5%",
-    markerMobileX: isImperio3 ? "58%" : "58%",
-    markerMobileY: isImperio3 ? "58%" : "28%",
-    coverX: "44.5%",
-    coverY: "32%",
-    coverMobileX: "58%",
-    coverMobileY: "34%",
-    coverOriginalPin: isImperio3
+    markerX: marker?.x ?? (isImperio3 ? "43%" : "38.6%"),
+    markerY: marker?.y ?? (isImperio3 ? "62%" : "10.5%"),
+    markerMobileX: marker?.mobileX ?? (isImperio3 ? "58%" : "58%"),
+    markerMobileY: marker?.mobileY ?? (isImperio3 ? "58%" : "28%"),
+    coverX: marker?.coverX ?? "44.5%",
+    coverY: marker?.coverY ?? "32%",
+    coverMobileX: marker?.coverMobileX ?? "58%",
+    coverMobileY: marker?.coverMobileY ?? "34%",
+    coverOriginalPin: marker?.coverOriginalPin ?? isImperio3
   };
 }
 
-export default function MapTransition({ map, nearby, address, apartmentName = "IMPERIO" }: Props) {
+export default function MapTransition({ map, nearby, address, apartmentName = "IMPERIO", marker }: Props) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [active, setActive] = useState(false);
   const [progress, setProgress] = useState(0);
   const revealedRef = useRef(0);
   const [assets, setAssets] = useState({ sketch: map.light, render: map.satellite });
   const routeUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
-  const mapMarker = getMapMarker(apartmentName);
+  const mapMarker = getMapMarker(apartmentName, marker ?? map.marker);
   const markerStyle = {
     "--marker-x": mapMarker.markerX,
     "--marker-y": mapMarker.markerY,

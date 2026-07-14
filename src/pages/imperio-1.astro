@@ -1,9 +1,11 @@
 ---
 import LandingPage from "@/components/LandingPage.astro";
-import { baseUrl, landing } from "@/data/landings";
+import { baseUrl } from "@/data/landings";
+import { getApartmentPageContent } from "@/lib/content";
 import { buildJsonLd } from "@/lib/jsonld";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
+const { apartment, apartmentCards, directBenefits, landing, promo, whatsappHref } = await getApartmentPageContent("imperio-1");
 const canonical = `${baseUrl}/${landing.slug}/`;
 const image = new URL(landing.heroImage, baseUrl).toString();
 ---
@@ -13,7 +15,14 @@ const image = new URL(landing.heroImage, baseUrl).toString();
   description={landing.metaDescription}
   canonical={canonical}
   image={image}
-  jsonLd={buildJsonLd(landing)}
+  jsonLd={buildJsonLd(landing, apartment)}
 >
-  <LandingPage />
+  <LandingPage
+    apartment={apartment}
+    apartmentCards={apartmentCards}
+    directBenefits={directBenefits}
+    landing={landing}
+    promo={promo}
+    whatsappHref={whatsappHref}
+  />
 </BaseLayout>

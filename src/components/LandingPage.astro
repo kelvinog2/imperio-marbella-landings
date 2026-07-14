@@ -1,5 +1,14 @@
 ---
-import { apartment as defaultApartment, landing as defaultLanding, type Apartment } from "@/data/landings";
+import {
+  apartment as defaultApartment,
+  apartmentCards as defaultApartmentCards,
+  directBenefits as defaultDirectBenefits,
+  landing as defaultLanding,
+  promo as defaultPromo,
+  whatsappHref as defaultWhatsappHref,
+  type Apartment
+} from "@/data/landings";
+import type { ApartmentCardView } from "@/lib/content";
 import DirectBookingSection from "./DirectBookingSection.astro";
 import FaqSection from "./FaqSection.astro";
 import Footer from "./Footer.astro";
@@ -28,9 +37,20 @@ type LandingView = {
 interface Props {
   apartment?: Apartment;
   landing?: LandingView;
+  apartmentCards?: readonly ApartmentCardView[];
+  directBenefits?: typeof defaultDirectBenefits | { title: string; text: string }[];
+  promo?: typeof defaultPromo;
+  whatsappHref?: string;
 }
 
-const { apartment = defaultApartment, landing = defaultLanding } = Astro.props;
+const {
+  apartment = defaultApartment,
+  landing = defaultLanding,
+  apartmentCards = defaultApartmentCards,
+  directBenefits = defaultDirectBenefits,
+  promo = defaultPromo,
+  whatsappHref = defaultWhatsappHref
+} = Astro.props;
 
 const navItems = [
   { label: "Inicio", href: "/" },
@@ -45,7 +65,7 @@ const navItems = [
   <SiteHeader navItems={navItems} ctaHref="#reserva-directa" ctaLabel="Precio especial" />
   <Hero landing={landing} />
   <TrustStats apartment={apartment} />
-  <DirectBookingSection compact apartment={apartment} />
+  <DirectBookingSection compact apartment={apartment} promo={promo} directBenefits={directBenefits} whatsappHref={whatsappHref} />
 
   <section class="section" aria-labelledby="intro-title">
     <div class="section-narrow">
@@ -64,5 +84,5 @@ const navItems = [
   <MapSection apartment={apartment} />
   <ReviewsSection apartment={apartment} />
   <FaqSection apartment={apartment} />
-  <Footer />
+  <Footer apartmentCards={apartmentCards} whatsappHref={whatsappHref} brand={apartment.brand} />
 </main>
