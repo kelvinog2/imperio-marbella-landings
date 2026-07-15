@@ -8,7 +8,6 @@ Landing principal y landings individuales para IMPERIO 1, IMPERIO 2 e IMPERIO 3.
 - React para islas interactivas.
 - Three.js para la transicion visual del mapa.
 - Sanity como CMS para contenido editable.
-- Next.js en `apps/admin-next` como panel auxiliar.
 
 ## Comandos
 
@@ -42,10 +41,15 @@ SANITY_PROJECT_ID=8vfyivj2
 SANITY_DATASET=production
 ```
 
-El Studio incluye dos tipos principales:
+El Studio incluye un escritorio editorial con:
 
-- `Apartamento`: nombre visible, slug, textos, hero, fotos, galeria, valoraciones, servicios, enlaces, direccion, coordenadas, pin del mapa y SEO.
-- `Ajustes generales`: portada, telefono, email, apartamentos visibles, textos de reserva directa, beneficios y SEO de inicio.
+- `Portada principal`: textos del hero, CTA, telefono, email, reserva directa y SEO.
+- `Apartamentos`: contenido completo de IMPERIO 1, IMPERIO 2 e IMPERIO 3.
+- `Galerias de fotos`: acceso directo a las galerias de cada apartamento.
+- `Mapas y pines`: direccion, coordenadas y posicion del pin de cada apartamento.
+- `SEO y reserva directa`: ajustes generales de metadatos y textos comerciales.
+
+Ya no existe calendario de disponibilidad en Sanity.
 
 La web consulta Sanity durante `pnpm build`. Si un campo no existe o Sanity no responde, usa el contenido local de `src/data/landings.ts` para no romper el diseno.
 

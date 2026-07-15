@@ -1,7 +1,8 @@
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
-import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "./sanity/schemas";
+import { deskStructure } from "./sanity/deskStructure";
+import { templates } from "./sanity/templates";
 
 export default defineConfig({
   name: "imperio-marbella",
@@ -11,11 +12,21 @@ export default defineConfig({
   dataset: "production",
 
   plugins: [
-    structureTool(),
-    visionTool()
+    structureTool({ structure: deskStructure })
   ],
 
   schema: {
-    types: schemaTypes
+    types: schemaTypes,
+    templates
+  },
+
+  document: {
+    actions: (prev, context) => {
+      if (context.schemaType === "siteSettings") {
+        return prev.filter((action) => !["delete", "duplicate"].includes(action.action ?? ""));
+      }
+
+      return prev;
+    }
   }
 });

@@ -8,8 +8,6 @@
     "dev": "astro dev --host 127.0.0.1",
     "build": "astro build",
     "preview": "astro preview --host 127.0.0.1",
-    "dev:admin": "pnpm --dir apps/admin-next dev",
-    "build:admin": "pnpm --dir apps/admin-next build",
     "sanity:dev": "sanity dev --host 127.0.0.1",
     "sanity:deploy": "sanity deploy"
   },
@@ -27,7 +25,6 @@
     "three": "^0.178.0"
   },
   "devDependencies": {
-    "@sanity/vision": "^3.98.1",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "playwright-core": "^1.61.1",
